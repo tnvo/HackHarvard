@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hack Harvard Submission</title>
+	<meta charset="utf-8">
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="description" content="The end product of 4 first timer!">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<meta property="og:url"                content="http://hackharvard.org" />
+	<meta property="og:title"              content="Hack Harvard Submission" />
+	<meta property="og:description"        content="The Coolest Project of All Time" />
+	<meta property="og:image" content="http://hackharvard.org/images/logoWhite.0ee3d17b.png" />
+</head>
+
+
+
+<body>
+
+	<div>
+<img src="harvard.jpg"  height="125" width="125"></div>
+<p><strong><font color="yellow">Project - The Myo Explorer</strong></font></p><BR>
+
+<img src="IMG_2908.jpg" height="400" width = "500" ><BR>
+	<font size="2"> A robotic car made by arduinos, controlled by a Myo armband, includes a live streaming webcam. Made possible in 36 hours by our beautiful brain.<BR>
+		-----------------------------------------------------------------------------------
+
+
+	 </div> <BR>
+
+		 <div>	<p><strong><font color="yellow">Example</strong></font></p>
+			 <iframe width="560" height="315" src="https://www.youtube.com/embed/mciBuAy6nVw" frameborder="0" allowfullscreen></iframe>
+
+		 </div>
+		 <BR>
+ 		-----------------------------------------------------------------------------------
+		
+	<!---
+		<div><p><strong><font color="yellow">Let's talk</strong></font></p>
+		 <iframe width="560" height="315" src="https://web.skype.com/" frameborder="0" allowfullscreen></iframe>
+			<BR>
+
+ </BR> </div>
+		-----------------------------------------------------------------------------------</div>-->
+		<BR>
+<div>	<p><strong><font color="yellow">Our awesome experiences</strong></font></p> <br>
+
+		<img src="a.jpg" height="400" width = "300" ><BR>
+			 <font color="yellow"><B>Team:</b> <a href="https://ca.linkedin.com/in/vladnek" target="_blank"><font color="yellow">Vlad Nek (Canada)</font></a>, Evi Kavrochorianou (Greece), <a href="https://ca.linkedin.com/in/thomas-tendron-04827210b" target="_blank"><font color="yellow">Thomas Tendron (Canada)</font></a>, & <a href="https://www.linkedin.com/in/thaonvo" target="_blank"><font color="yellow">Thao Vo (United States)</font></a> </BR> </font></font><br>
+	<li>We met <i>a lot</i> of awesome hackers.</li>
+   <li>We set foot on one of the oldest & most <u>prestigious</u> university in the world.</li>
+	<li>We frozed ourselves walking from Harvard to MIT for some frozen "fresh" air :3 ...</li>
+	<li>We gained about <B>~20 lbs</b> from all the foods & coffees HackHarvard provided....</li>
+	It's our pleasure to show you our final product @ our first hackathon ever!</li> <BR>
+ <li>Thank you, organizers.</li>
+ <BR>
+-----------------------------------------------------------------------------------<BR>
+	<BR>
+
+
+<font size="2"> 15 minutes website made with <3 by sleep-deprived <a href="mailto:thaovo@email.arizona.edu"><font color="white">Thao N. Vo</a> </font><BR></font> <BR>
+
+	<strong>PLAYSPACE</strong> <BR>(because this seemed fun at the time)
+</body>
+</html>
+
+        <script src="sketch.js"></script>
+        <script>
+
+        // ----------------------------------------
+        // Particle
+        // ----------------------------------------
+
+        function Particle( x, y, radius ) {
+            this.init( x, y, radius );
+        }
+
+        Particle.prototype = {
+
+            init: function( x, y, radius ) {
+
+                this.alive = true;
+
+                this.radius = radius || 10;
+                this.wander = 0.15;
+                this.theta = random( TWO_PI );
+                this.drag = 0.92;
+                this.color = '#fff';
+
+                this.x = x || 0.0;
+                this.y = y || 0.0;
+
+                this.vx = 0.0;
+                this.vy = 0.0;
+            },
+
+            move: function() {
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                this.vx *= this.drag;
+                this.vy *= this.drag;
+
+                this.theta += random( -0.5, 0.5 ) * this.wander;
+                this.vx += sin( this.theta ) * 0.1;
+                this.vy += cos( this.theta ) * 0.1;
+
+                this.radius *= 0.96;
+                this.alive = this.radius > 0.5;
+            },
+
+            draw: function( ctx ) {
+
+                ctx.beginPath();
+                ctx.arc( this.x, this.y, this.radius, 0, TWO_PI );
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        };
+
+        // ----------------------------------------
+        // Example
+        // ----------------------------------------
+
+        var MAX_PARTICLES = 280;
+        var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
+
+        var particles = [];
+        var pool = [];
+
+        var demo = Sketch.create({
+            container: document.getElementById( 'container' )
+        });
+
+        demo.setup = function() {
+
+            // Set off some initial particles.
+            var i, x, y;
+
+            for ( i = 0; i < 20; i++ ) {
+                x = ( demo.width * 0.5 ) + random( -100, 100 );
+                y = ( demo.height * 0.5 ) + random( -100, 100 );
+                demo.spawn( x, y );
+            }
+        };
+
+        demo.spawn = function( x, y ) {
+
+            if ( particles.length >= MAX_PARTICLES )
+                pool.push( particles.shift() );
+
+            particle = pool.length ? pool.pop() : new Particle();
+            particle.init( x, y, random( 5, 40 ) );
+
+            particle.wander = random( 0.5, 2.0 );
+            particle.color = random( COLOURS );
+            particle.drag = random( 0.9, 0.99 );
+
+            theta = random( TWO_PI );
+            force = random( 2, 8 );
+
+            particle.vx = sin( theta ) * force;
+            particle.vy = cos( theta ) * force;
+
+            particles.push( particle );
+        };
+
+        demo.update = function() {
+
+            var i, particle;
+
+            for ( i = particles.length - 1; i >= 0; i-- ) {
+
+                particle = particles[i];
+
+                if ( particle.alive ) particle.move();
+                else pool.push( particles.splice( i, 1 )[0] );
+            }
+        };
+
+        demo.draw = function() {
+
+            demo.globalCompositeOperation  = 'lighter';
+
+            for ( var i = particles.length - 1; i >= 0; i-- ) {
+                particles[i].draw( demo );
+            }
+        };
+
+        demo.mousemove = function() {
+
+            var particle, theta, force, touch, max, i, j, n;
+
+            for ( i = 0, n = demo.touches.length; i < n; i++ ) {
+
+                touch = demo.touches[i], max = random( 1, 4 );
+                for ( j = 0; j < max; j++ ) {
+                  demo.spawn( touch.x, touch.y );
+                }
+
+            }
+        };
+
+        </script>
+	<!---	<p><strong><font color="white">Made with love from Harvard<3  </strong></font></p>
+	-->
